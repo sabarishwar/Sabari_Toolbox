@@ -1,0 +1,387 @@
+///////////////////////////////////////////////////////////////////////////
+//    Script Name:s_toolbox                                              //
+//    Version:1.00                                                       //
+//    Author:Sabarishwar L.R                                             //
+//    Contact:sabarishwar@gmail.com                                      //
+//    BLOG:http://sabareeshwar.blogspot.in/                              //
+//	  Copyright ©2013 Sabarishwar L.R - All Rights Reserved.             //
+//                                                                       //
+//    Description:                                                       //
+//    The purpose of this script is to make a quick access on tools      //
+//    and windows of maya in simple GUI.                                 //
+//                                                                       //
+//	  1. INSTALLATION                                                    //
+//                                                                       //
+//	  ON A PC:                                                           //
+//	  Put the script s_toolbox.mel in the following path:                //
+//	  C:/Users/YourUser/Documents/maya/scripts/                          //
+//                                                                       //
+//    2.START UP MAYA, OPEN SCRIPT EDITOR, SOURCE THE SCRIPT             //
+//                                                                       //
+//	  3. THEN, ENTER THE FOLLOWING COMMAND INTO                          //
+//	  THE COMMAND LINE OR THE SCRIPT EDITOR:                             //
+//                                                                       //
+//    4. s_toolbox();                                                    //
+//                                                                       //
+//	  5. TO HAVE EASY ACCESS TO SCRIPT, CREATE A SHELF BUTTON            //
+//	  WITH ONLY THAT COMMAND. EVERY TIME YOU HIT THE BUTTON,             //
+//	  THE RAPID RIG INTERFACE WILL POP UP. HAPPY RIGGING!                //
+//                                                                       //
+///////////////////////////////////////////////////////////////////////////
+
+// Main procedure ////
+proc s_toolbox()
+{
+if (`window -exists SabariToolBox`)
+   {
+	deleteUI  SabariToolBox;
+	 }
+string $mywindow = `window -t "SabariToolBox" -w 100 -h 110 -mxb 1 -mnb 1 -sizeable 0 SabariToolBox`;
+
+columnLayout;
+
+        //File Menu
+		text -l "File Menu" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 2 -rowHeight 5 20;
+		button -l "New" -w 45 -ann "New" -c "NewScene";
+		button -l "ProjWin" -w 46 -ann "ProjectWindow" -c "ProjectWindow";		
+		button -l "Open" -w 45 -ann "Open" -c "OpenScene";
+		button -l "SetProj" -w 46 -ann "SetProject" -c "SetProject";
+		button -l "SaveAs" -w 45 -ann "Save As" -c "SaveSceneAs";		
+		button -l "ExpAll" -w 45 -ann "Export All" -c "ExportOptions";
+		button -l "Import" -w 45 -ann "Import" -c "ImportOptions";
+		button -l "Expselect" -w 55 -ann "ExportSelection" -c "ExportSelectionOptions";
+		setParent ..;
+		
+		//Modify Menu
+		text -l "Modify Menu" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		setParent ..;
+		rowColumnLayout -numberOfRows 1 -rowHeight 3 20;
+		button -l "FrezTrans" -w 66 -ann "Freeze Transforms" -c "FreezeTransformations"; 
+		button -l "DelHistory" -w 63 -ann "Delete History" -c "DeleteHistory";
+		button -l "CentPivot" -w 63 -ann "Center Pivot" -c "CenterPivot";
+	    setParent ..;
+	    
+		//Toggle UI Elements
+		text -l "Toggle UI Elements" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 1 -rowHeight 5 20;
+		button -l "Show UI" -w 45 -ann "ShowUIElements" -c "ShowUI";
+		button -l "Hide UI" -w 45 -ann "HideUIElements" -c "HideUI";
+		button -l "Cmnd Line" -w 60 -ann "CommandLine" -c "ToggleCommandLine";
+		button -l "Dock" -w 40 -ann "Dock s_toolbox" -c "Dockstoolbox";
+		setParent ..;
+		rowColumnLayout -numberOfRows 3 -rowHeight 5 20;
+		button -l "Status Line" -w 60 -ann "Status Line" -c "StatusLine";		
+		button -l "ToolSetting" -w 46 -ann "Tool Settings" -c "ToolSettings";		
+		button -l "Tool Box" -w 46 -ann "Tool Settings" -c "ToolBox";
+		button -l "Channel Box" -w 70 -ann "Channel Box" -c "ChannelBox";
+		button -l "Time Slider" -w 60 -ann "Time Slider" -c "TimeSlider";		
+		button -l "Range Slider" -w 60 -ann "Range Slider" -c "RangeSlider";
+		button -l "Shelf Menu" -w 60 -ann "Shelf" -c "Shelf";
+		button -l "Help Line" -w 50 -ann "Help Line" -c "HelpLine";
+		button -l "Panel Menu" -w 60 -ann "Panel bars" -c "Panelbars";
+		setParent ..;
+		
+	    //object & Component Mode
+	    text -l "object & Component Mode" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 1 -rowHeight 3 30;
+		button -l "Objmode" -w 50 -ann "ObjectMode" -c "setSelectMode object object";
+		button -l "Cmpmode" -w 51 -ann "CompomentMode" -c "setSelectMode components Components";
+		button -l "Handle sel" -w 53 -ann "Handle Selection" -c "setComponentPickMask Other true";
+		button -l "LRA" -w 37 -ann "Toggle LRA" -c "ToggleLocalRotationAxes";
+		setParent ..;
+		
+		//Rig Windows
+        text -l "Rig Windows" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+        rowColumnLayout -numberOfRows 2 -rowHeight 1 20;
+        button -l "Outl" -w 30 -ann "Outliner" -c "Outliner;";
+		button -l "HShd" -w 35 -ann "HyperShade" -c "Hypershade;";
+		button -l "HGph" -w 35 -ann "HyperGraph" -c "Hypergraph;";
+		button -l "Blnd" -w 35 -ann "BlendShapeEditor" -c "BlendShapeEditor;";		
+		button -l "CE" -w 35 -ann "ConnectionEditor" -c "ConnectionEditor;";
+		button -l "SDK" -w 35 -ann "SetDrivenKeyOptions" -c "SetDrivenKeyOptions;";		
+		button -l "CpEd" -w 35 -ann "ComponentEditor" -c "ComponentEditor;";
+		button -l "Node" -w 35 -ann "NodeEditorWindow" -c "NodeEditorWindow;";
+		button -l "MEL Cmd" -w 50 -ann "MEL Commands" -c "showHelp DocsMelCommands";
+		button -l "ScriptED" -w 50 -ann "Script Editor" -c "scriptEditor";			
+		setParent ..;	
+						
+		 //Skeletal
+		 text -l "Skeletal" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		 rowColumnLayout -numberOfRows 2 -rowHeight 5 20;
+		 button -l "Joint" -w 40 -ann "Joint Tool" -c "JointTool"; 
+		 button -l "Jntsz" -w 40 -ann "Joint Size" -c "jdsWin";
+		 button -l "IK" -w 37 -ann "IKHandleTool" -c "IKHandleToolOptions";
+		 button -l "Iksz" -w 37 -ann "IkHandle size" -c "ikHdsWin";
+         button -l "IKsp" -w 37 -ann "IKSplineHandle" -c "IKSplineHandleToolOptions";
+         button -l "Loc" -w 37 -ann "CreateLocator" -c "CreateLocator";
+         button -l "MJ" -w 37 -ann "MirrorJoint" -c "MirrorJointOptions";
+         button -l "Clu" -w 37 -ann "CreateCluster" -c "CreateCluster";
+         button -l "OJ" -w 40 -ann "OrientJoint" -c "OrientJointOptions";
+         button -l "SH" -w 40 -ann "SelectHierarchy" -c "SelectHierarchy";        
+         setParent ..;
+         
+         // Show & Hide 
+		text -l "Show & Hide" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 2 -rowHeight 2 20;
+		button -l "Show All" -w 50 -ann "Show All" -c "Showall";
+		button -l "Nurbs" -w 38 -ann "nurbsCurve" -c "nurbsCurve";
+		button -l "Hide All" -w 50 -ann "Hide All" -c "Hideall";
+		button -l "Poly" -w 30 -ann "polymeshes" -c "polymeshes";
+		button -l "Deformers" -w 60 -ann "Deformers" -c "deformers";		
+		button -l "Joint" -w 30 -ann "joints" -c "joints";
+		button -l "Ik's" -w 30 -ann "Ik Handles" -c "ikHandles";
+		button -l "Loc" -w 30 -ann "Locators" -c "locators";
+		setParent ..;
+		
+		//Skinning
+        text -l "Skinning" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 1 -rowHeight 1 20;
+		button -l "Skin" -w 30 -ann "SmoothBindSkin" -c "SmoothBindSkinOptions";	
+		button -l "Paint" -w 35 -ann "Paint Weight Tool" -c "ArtPaintSkinWeightsToolOptions";
+		button -l "Mirror" -w 35 -ann "MirrorSkinWeight" -c "MirrorSkinWeightsOptions";
+		button -l "Detach" -w 46 -ann "Detach Skin" -c "DetachSkin";
+		button -l "AddInfl" -w 46 -ann "AddInfluence" -c "AddInfluenceOptions";			
+		setParent ..;
+		
+		//Nodes
+	    text -l "Nodes" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 2 -rowHeight 2 25;			
+		button -l "Condition" -w 57 -ann "Condition" -c "shadingNode -asUtility condition";				
+		button -l "curveInfo" -w 57 -ann "curveInfo" -c "shadingNode -asUtility curveInfo";
+		button -l "SetRange" -w 57 -ann "Set Range" -c "shadingNode -asUtility setRange";				
+		button -l "BlenColors" -w 57 -ann "blendColors" -c "shadingNode -asUtility blendColors";
+		button -l "DisBtw" -w 45 -ann "distanceBetween" -c "shadingNode -asUtility distanceBetween";
+		button -l "PMA" -w 33 -ann "Plus Minue Average" -c "shadingNode -asUtility plusMinusAverage";
+		button -l "MD" -w 27 -ann "Multiple Divide" -c "shadingNode -asUtility multiplyDivide";
+		button -l "Rev" -w 33 -ann "Reverse" -c "shadingNode -asUtility reverse";
+		setParent ..;
+			        
+        				
+		//Constraints	
+		text -l "Constraints" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 1 -rowHeight 2 20;
+		button -l "Point" -w 35 -ann "Point Constraint" -c "PointConst"; 
+		button -l "Orient" -w 38 -ann "Orient Constraint" -c "OrientConst;";
+		button -l "Parent" -w 40 -ann "Parent Constraint" -c "ParentConst;";
+		button -l "Scale" -w 37 -ann "Scale Constraint" -c "ScaleConst;";
+		button -l "Pole" -w 40 -ann "Pole Constraint" -c "poleVectorConstraint -weight 1";
+		setParent ..;
+		
+		//Anim Windows	
+		text -l "Anim Windows" -font boldLabelFont -align "center" -bgc 0.6 1 0.6 ;
+		rowColumnLayout -numberOfRows 1 -rowHeight 2 20;
+		button -l "GRPH" -w 35 -ann "GraphEditor" -c "GraphEditor();";
+		button -l "Dope" -w 35 -ann "DopeSheetEditor" -c "DopeSheetEditor();";
+		button -l "Exp Ed" -w 40 -ann "ExpressionEditor" -c "ExpressionEditor();";
+		button -l "Trax" -w 30 -ann "TraxEditor" -c "CharacterAnimationEditor();";
+		button -l "PlayBS" -w 50 -ann "Playblast" -c "PlayblastOptions();";
+		setParent ..;		
+		
+showWindow $mywindow;
+    }
+
+        //Toggle StatusLine
+        global proc StatusLine()
+        {
+        toggleUIComponentVisibility "Status Line";
+        }
+        
+        //Toggle Channel Box
+        global proc ChannelBox()
+        {
+        toggleUIComponentVisibility("Channel Box / Layer Editor");
+        }
+        
+        //Toggle ToolSettings
+        global proc ToolSettings()
+        {
+        toggleUIComponentVisibility("Tool Settings");
+        }
+        
+        // Toggle Tool Box
+        global proc ToolBox()
+        {
+        toggleUIComponentVisibility "Tool Box";
+        }
+        // Toggle Time Slider
+        global proc TimeSlider()
+        {
+        toggleUIComponentVisibility "Time Slider";
+        }
+        
+        // Toggle Range Slider
+        global proc RangeSlider()
+        {
+        toggleUIComponentVisibility "Range Slider";
+        }
+        
+        // Toggle Shelf
+        global proc Shelf()
+        {
+        toggleUIComponentVisibility "Shelf";
+        }
+        
+        // Toggle Help
+        global proc HelpLine()
+        {
+        toggleUIComponentVisibility "Help Line";
+        }
+        
+        //Toggle Panelbars
+        global proc Panelbars()
+        {
+        if (`optionVar -q allowMenusInPanels`) {toggleMenuBarsInAllPanels 0;} else {toggleMenuBarsInAllPanels 1;}
+        if (`optionVar -q collapseIconBarsInPanels`) {toggleModelEditorBarsInAllPanels 0;} else {toggleModelEditorBarsInAllPanels 1;}
+        }
+        
+        // Point Constrain
+        global proc PointConst()
+        {
+        PointConstraintOptions;
+        }
+        
+        // Orient Constrain
+        global proc OrientConst()
+        {
+        OrientConstraintOptions;
+        }
+        
+        // Parent Constrain
+        global proc ParentConst()
+        {
+        ParentConstraintOptions;
+        }
+        
+        // Scale Constrain
+        global proc ScaleConst()
+        {
+        ScaleConstraintOptions;
+        }
+        
+        // Outliner
+        global proc Outliner()
+        {
+        OutlinerWindow;
+        }
+        
+        // Hypergraph
+        global proc Hypergraph()
+        {
+        HypergraphHierarchyWindow;
+        }
+        
+        //Hypershade
+        global proc Hypershade()
+        {
+        HypershadeWindow;
+        }
+        
+        //NurbsCurve
+        global proc nurbsCurve()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -nurbsCurves $activePanel` == 1) {
+        modelEditor -e -nurbsCurves 0 $activePanel;
+        } else {
+        modelEditor -e -nurbsCurves 1 $activePanel;
+        }
+        }
+        
+        // Polymeshes
+        global proc polymeshes()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -polymeshes $activePanel` == 1) {
+        modelEditor -e -polymeshes 0 $activePanel;
+        } else {
+        modelEditor -e -polymeshes 1 $activePanel;
+        }
+        }
+        
+        // Joints
+        global proc joints()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -joints $activePanel` == 1) {
+        modelEditor -e -joints 0 $activePanel;
+        } else {
+        modelEditor -e -joints 1 $activePanel;
+        }
+        }
+        
+        // IkHandles
+        global proc ikHandles()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -ikHandles $activePanel` == 1) {
+        modelEditor -e -ikHandles 0 $activePanel;
+        } else {
+        modelEditor -e -ikHandles 1 $activePanel;
+        }
+        }
+        
+        // Deformers
+        global proc deformers()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -deformers $activePanel` == 1) {
+        modelEditor -e -deformers 0 $activePanel;
+        } else {
+        modelEditor -e -deformers 1 $activePanel;
+        }
+        }
+        
+        // Hide All
+        global proc Hideall()
+        {
+        modelEditor -e -allObjects 0 modelPanel4;
+        }
+        
+        // Show All
+        global proc Showall()
+        {
+        modelEditor -e -allObjects 1 modelPanel4;
+        }
+        
+        // Locators
+        global proc locators()
+        {
+        string $activePanel = `getPanel -wf`;
+        if (`modelEditor -q -locators $activePanel` == 1) {
+        modelEditor -e -locators 0 $activePanel;
+        } else {
+        modelEditor -e -locators 1 $activePanel;
+        }
+        }
+        
+        // Hide UI
+        global proc HideUI()
+        {
+        HideUIElements;
+        }
+        
+        // Show UI
+        global proc ShowUI()
+        {
+        ShowUIElements;
+        }
+        
+        // Dock sToolbox
+        global proc Dockstoolbox()
+        {
+        s_toolbox();
+        dockControl -area left -content  SabariToolBox Sabari_ToolBox;
+        }
+        
+        // Dock scriptEditor
+        global proc scriptEditor()
+        {
+        ScriptEditor;
+        }
+        
+        // Dock Outliner
+        global proc Outliner()
+        {
+        OutlinerWindow;
+        }
